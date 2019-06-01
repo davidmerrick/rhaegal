@@ -8,7 +8,7 @@ provider:
   runtime: java8
   stage: ${opt:stage, "dev"}
   region: us-west-2
-  memorySize: 128
+  memorySize: 256
   timeout: 20
   environment:
     SLACK_WEBHOOK_URI: ${env:SLACK_WEBHOOK_URI}
