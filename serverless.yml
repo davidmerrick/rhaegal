@@ -1,0 +1,31 @@
+service: rhaegal
+
+custom:
+  topicName: drogon
+
+provider:
+  name: aws
+  runtime: java8
+  stage: ${opt:stage, "dev"}
+  region: us-west-2
+  memorySize: 256
+  timeout: 10
+  environment:
+    SLACK_WEBHOOK_URI: ${env:SLACK_WEBHOOK_URI}
+
+package:
+  artifact: build/libs/rhaegal.jar
+
+functions:
+  sns-handler:
+    handler: com.merricklabs.rhaegal.handlers.SnsHandler
+    events:
+      - sns:
+          arn:
+            Fn::Join:
+              - ":"
+              - - "arn:aws:sns"
+                - Ref: "AWS::Region"
+                - Ref: "AWS::AccountId"
+                - ${self:custom.topicName}
+          topicName: ${self:custom.topicName}
