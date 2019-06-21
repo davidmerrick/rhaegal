@@ -1,7 +1,7 @@
 service: rhaegal
 
 custom:
-  topicName: drogon
+  topicName: ${env:SNS_TOPIC}
 
 provider:
   name: aws
